@@ -1,0 +1,51 @@
+p{
+text-align: right;
+    direction: rtl;
+}
+
+p{
+text-align: right;
+    direction: rtl;
+	font-weight: 500;
+    color: #535353;
+}
+
+.content-text {
+    height: 400px;
+    overflow: auto;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+
+    direction: rtl;
+    color: #1100fb;
+}
+
+.progressbar{
+	direction: ltr;
+    float: left;
+    display: flex;
+    position: relative;
+    top: -64px;
+    left: 0px;
+    background: aliceblue;
+    width: 75px;
+    padding: 6px;
+    font-size: x-large;
+    text-align: center;
+    padding-left: 18px;
+}
+
+h6{
+color: #356560;
+    background-color: #e6e8ea;
+    width: 100%;
+    margin: 0px;
+    padding: 9px;
+    padding-left: 50%;
+    padding-right: 34px;
+    direction: rtl;
+    float: right;
+    text-align: right;
+	}
