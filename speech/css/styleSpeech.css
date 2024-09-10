@@ -184,6 +184,31 @@ main {
   height: 100%;
 }
 
+.fill-word input {
+  text-align: center;
+  font-size: 1.5rem; /* حجم الخط أكبر ليسهل على الطلاب رؤيته */
+  border: 2px solid #ccc; /* سماكة أكبر للحدود */
+  border-radius: 5px;
+  padding: 10px; /* مساحة داخلية أكبر لزيادة حجم الحقل */
+  width: 40px; /* عرض الحقل أكبر */
+  height: 50px; /* زيادة ارتفاع الحقل */
+  margin: 5px; /* إضافة مسافة صغيرة حول الحقول */
+}
+
+/* تنسيق خاص للأجهزة الصغيرة (الهواتف المحمولة) */
+@media (max-width: 600px) {
+  .fill-word input {
+    width: 50px; /* عرض أكبر على الأجهزة الصغيرة */
+    height: 60px; /* ارتفاع أكبر لسهولة الاستخدام */
+    font-size: 2rem; /* حجم خط أكبر لتسهيل القراءة والكتابة */
+  }
+
+  .check-btn {
+    padding: 10px 20px; /* زيادة حجم الزر لتسهيل النقر */
+    font-size: 1.25rem; /* حجم النص داخل الزر */
+  }
+}
+
 
 @media (min-width: 576px) {
   main {
