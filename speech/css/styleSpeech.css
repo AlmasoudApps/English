@@ -60,6 +60,7 @@ h1 {
   margin:initial;
   padding: 8px;
   
+  
 }
 
 .btn {
@@ -95,20 +96,13 @@ h1 {
 .text-box {
   background-color: var(--secondary-color);
   color: var(--light-color);
-  width: 900px;
-  max-width: 90vw;
-  position: absolute;
+  max-width: 440px;
+  width: 100%;
+  position: relative;;
   border-radius: var(--border-radius);
   padding: 1.25rem;
   font-size: 0.75rem;
-  /* transform: translate(-50%, -800px);
-    top: 30%;
-  left: 50%;
-  transition: all 1s ease-in-out;*/
-}
 
-.text-box.show {
-  transform: translate(-50%, 0);
 }
 
 .text-box select {
@@ -152,6 +146,7 @@ main {
 }
 
 .box {
+  margin-top: 20px; /* إضافة فراغ (20px) قبل العنصر */
   box-shadow: 0 2px 10px var(--overlay-color);
   border-radius: var(--border-radius);
   display: flex;
@@ -186,28 +181,46 @@ main {
 
 .fill-word input {
   text-align: center;
-  font-size: 1.5rem; /* حجم الخط أكبر ليسهل على الطلاب رؤيته */
-  border: 2px solid #ccc; /* سماكة أكبر للحدود */
+  font-size: 1.2rem; /* حجم الخط */
+  border: 2px solid #ccc; /* سماكة الحدود */
   border-radius: 5px;
-  padding: 10px; /* مساحة داخلية أكبر لزيادة حجم الحقل */
-  width: 40px; /* عرض الحقل أكبر */
-  height: 50px; /* زيادة ارتفاع الحقل */
-  margin: 5px; /* إضافة مسافة صغيرة حول الحقول */
+  padding: 10px;
+  width: 50px; /* العرض الافتراضي */
+  height: 50px; /* الارتفاع الافتراضي */
+  margin: 5px;
 }
 
-/* تنسيق خاص للأجهزة الصغيرة (الهواتف المحمولة) */
-@media (max-width: 600px) {
+/* تحسين تنسيق الحقول للأجهزة الذكية */
+@media (max-width: 768px) {
   .fill-word input {
-    width: 50px; /* عرض أكبر على الأجهزة الصغيرة */
-    height: 60px; /* ارتفاع أكبر لسهولة الاستخدام */
-    font-size: 2rem; /* حجم خط أكبر لتسهيل القراءة والكتابة */
+    width: 70px; /* عرض أكبر للهواتف */
+    height: 70px; /* ارتفاع أكبر للهواتف */
+    font-size: 1.7rem; /* تكبير حجم الخط */
   }
 
   .check-btn {
-    padding: 10px 20px; /* زيادة حجم الزر لتسهيل النقر */
-    font-size: 1.25rem; /* حجم النص داخل الزر */
+    padding: 12px 25px; /* تكبير زر Check */
+    font-size: 1.5rem; /* تكبير النص داخل الزر */
   }
 }
+
+@media (max-width: 480px) {
+  .fill-word input {
+    width: 80px; /* تكبير عرض الحقول على الهواتف الصغيرة */
+    height: 80px; /* تكبير ارتفاع الحقول */
+    font-size: 2rem; /* تكبير حجم النص */
+  }
+
+  .check-btn {
+    width: 100%; /* توسيع زر Check */
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+}
+
+
+
+
 
 
 @media (min-width: 576px) {
