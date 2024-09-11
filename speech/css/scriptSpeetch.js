@@ -11,6 +11,9 @@ const data = [
   { image: "vase", text: "vase", missing: ["a", "e"] },
 ];
 
+// إنشاء العناصر المرئية بناءً على البيانات
+data.forEach(createBox);
+
 function createBox(item) {
   const box = document.createElement("div");
   const { image, text, missing } = item;
@@ -18,56 +21,43 @@ function createBox(item) {
   box.classList.add("box");
   box.innerHTML = `
     <br>
-    <img src='./imgSpeech/${image}.jpg' alt="${text.toLowerCase()}" /> <!-- تحويل النص في alt إلى حروف صغيرة -->
-    <p class="info">${text.toLowerCase()}</p> <!-- تحويل النص أسفل الصورة إلى حروف صغيرة -->
+    <img src='./imgSpeech/${image}.jpg' alt="${text.toLowerCase()}" />
+    <p class="info">${text.toLowerCase()}</p>
     <form class="fill-word" onsubmit="return false;">
-      ${createInputs(text.toLowerCase(), missing)} <!-- تأكد من تحويل النص المستخدم في الحقول أيضا إلى حروف صغيرة -->
+      ${createInputs(text.toLowerCase(), missing)}
       <br>
       <p class="result" style="color:green;"></p>
       <br><br>
-      <button class="check-btn">Check</button> <!-- الزر الآن أسفل النص -->
+      <button class="check-btn">Check</button>
     </form>
     <br>
   `;
 
-  // إضافة حدث للنقر على الصورة لتشغيل الصوت
-  box.querySelector("img").addEventListener("click", () => handleSpeech(text.toLowerCase()));
-
-  const checkButton = box.querySelector(".check-btn");
-  checkButton.addEventListener("click", () => checkAnswer(box, text.toLowerCase()));
-
+  // إضافة حدث النقر على الصورة لتشغيل الصوت
+  box.querySelector("img").addEventListener("click", () => handleSpeech(text.toLowerCase(), box));
+  box.querySelector(".check-btn").addEventListener("click", () => checkAnswer(box, text.toLowerCase()));
   main.appendChild(box);
 }
 
-
-
-
 function createInputs(word, missing) {
-  let inputsHTML = "";
-  for (let i = 0; i < word.length; i++) {
-    if (missing.includes(word[i])) {
-      inputsHTML += `<input type="text" maxlength="1" class="letter" style="width: 20px;">`;
-    } else {
-      inputsHTML += `<span>${word[i]}</span>`;
-    }
-  }
-  return inputsHTML;
+  return word.split("").map((char) => {
+    return missing.includes(char)
+      ? `<input type="text" maxlength="1" class="letter" style="width: 20px;">`
+      : `<span>${char}</span>`;
+  }).join("");
 }
 
 function checkAnswer(box, correctWord) {
   const inputs = box.querySelectorAll(".letter");
   let userAnswer = "";
 
-  // جمع الأحرف المدخلة
   inputs.forEach(input => {
-    const letter = input.value.trim().toLowerCase(); // إزالة الفراغات وتحويل الحروف إلى lowercase
+    const letter = input.value.trim().toLowerCase();
     userAnswer += letter;
   });
 
-  // الحصول على الحروف الناقصة من البيانات
-  const missingLetters = correctWord.split('').filter((char, index) => data.find(item => item.text === correctWord).missing.includes(char.toLowerCase()));
+  const missingLetters = correctWord.split('').filter(char => data.find(item => item.text === correctWord).missing.includes(char.toLowerCase()));
 
-  // التحقق أولاً من أن المستخدم أدخل الأحرف في كل الحقول
   if (userAnswer.length !== missingLetters.length) {
     Swal.fire({
       title: 'اكمل الإجابة!',
@@ -78,7 +68,6 @@ function checkAnswer(box, correctWord) {
     return;
   }
 
-  // التحقق من صحة الحروف الناقصة فقط
   if (userAnswer === missingLetters.join('')) {
     Swal.fire({
       title: 'آحسنت!',
@@ -96,91 +85,55 @@ function checkAnswer(box, correctWord) {
   }
 }
 
-
-
-
-// تفعيل تحويل النص إلى صوت عند النقر على الصورة
-function handleSpeech(text) {
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = rateInput.value;
-  
-  // تحديد الصوت
-  const selectedVoice = voicesSelect.value;
-  const voices = speechSynthesis.getVoices();
-  const voice = voices.find(voice => voice.name === selectedVoice);
-  if (voice) {
-    utterance.voice = voice;
-  }
-  
-  speechSynthesis.speak(utterance);
-}
-
+// إدارة الأصوات وتحميلها
 const message = new SpeechSynthesisUtterance();
 let voices = [];
 
 function loadVoices() {
   voices = speechSynthesis.getVoices();
 
-  // كشف نظام التشغيل من خلال userAgent
-  const userAgent = navigator.userAgent.toLowerCase();
-
-  let preferredVoice = null;
-
-  if (userAgent.includes("win")) {
-    // إذا كان النظام Windows
-    preferredVoice = voices.find(voice => voice.name.includes("Microsoft"));
-  } else if (userAgent.includes("mac") || userAgent.includes("iphone") || userAgent.includes("ipad")) {
-    // إذا كان النظام macOS أو iOS
-    preferredVoice = voices.find(voice => voice.name === "Samantha");
-  } else if (userAgent.includes("android")) {
-    // إذا كان النظام Android
-    preferredVoice = voices.find(voice => voice.name.includes("Google"));
-  } else if (userAgent.includes("linux")) {
-    // إذا كان النظام Linux
-    preferredVoice = voices.find(voice => voice.lang.startsWith("en")); // ابحث عن أي صوت باللغة الإنجليزية
-  }
-
-  // إذا تم العثور على صوت مفضل، اجعله الافتراضي
-  if (preferredVoice) {
-    message.voice = preferredVoice;
-    voicesSelect.value = preferredVoice.name; // تحديد الصوت في القائمة المنسدلة
-  }
-
-  // ملء القائمة المنسدلة بالأصوات المتاحة
-  voices.forEach(function(voice) {
+  $("#voices").empty();
+  voices.forEach(function(voice, i) {
     const option = document.createElement("option");
     option.value = voice.name;
     option.textContent = voice.name;
-
-    if (voice === preferredVoice) {
-      option.selected = true; // تحديد الصوت الافتراضي
+    if (voice.name === "Samantha") {
+      option.selected = true;
+      message.voice = voice;
     }
-
     voicesSelect.appendChild(option);
   });
 }
 
-// هذه الدالة تستخدم لتحويل النص إلى كلام
-function handleSpeech(text) {
-  message.text = text;
-  message.rate = parseFloat(rateInput.value);
-
-  const selectedVoice = voices.find(voice => voice.name === voicesSelect.value);
-  if (selectedVoice) {
-    message.voice = selectedVoice;
-  }
-
-  speechSynthesis.speak(message);
-}
-
-// استدعاء الأصوات عند تحميل الصفحة
+// تحميل الأصوات عند التغيير
 window.speechSynthesis.onvoiceschanged = function() {
   loadVoices();
 };
 
+// دالة لتحضير النص ليتم نطقه
+function setTextMessage(text) {
+  message.text = text;
+  message.rate = parseFloat(rateInput.value);
+}
 
-// استدعاء تحميل الأصوات عند جاهزيتها
-speechSynthesis.onvoiceschanged = loadVoices;
+// تشغيل النص
+function speakText() {
+  speechSynthesis.speak(message);
+}
 
-// إنشاء صناديق الصور والاختبارات
-data.forEach(createBox);
+// نطق النص عند الضغط على الصورة
+function handleSpeech(text, box) {
+  setTextMessage(text);
+  speakText();
+  box.classList.add("active");
+  setTimeout(() => box.classList.remove("active"), 800);
+
+  const selectedVoice = voicesSelect.value;
+  message.voice = voices.find(voice => voice.name === selectedVoice);
+}
+
+// تعيين الصوت عند تغييره من القائمة المنسدلة
+voicesSelect.addEventListener("change", function() {
+  const selectedVoice = voicesSelect.value;
+  message.voice = voices.find(voice => voice.name === selectedVoice);
+});
