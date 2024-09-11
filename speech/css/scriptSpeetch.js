@@ -89,31 +89,30 @@ function checkAnswer(box, correctWord) {
 const message = new SpeechSynthesisUtterance();
 let voices = [];
 
+// تحميل الأصوات المتاحة في المتصفح
 function loadVoices() {
   voices = speechSynthesis.getVoices();
+  voicesSelect.innerHTML = ""; // تفريغ القائمة لتحديثها
 
-  $("#voices").empty();
-  voices.forEach(function(voice, i) {
+  voices.forEach(voice => {
     const option = document.createElement("option");
     option.value = voice.name;
     option.textContent = voice.name;
     if (voice.name === "Samantha") {
       option.selected = true;
-      message.voice = voice;
+      message.voice = voice; // تعيين الصوت الافتراضي إلى Samantha
     }
     voicesSelect.appendChild(option);
   });
 }
 
-// تحميل الأصوات عند التغيير
-window.speechSynthesis.onvoiceschanged = function() {
-  loadVoices();
-};
+// استدعاء الأصوات المتاحة عند تغيرها
+window.speechSynthesis.onvoiceschanged = loadVoices;
 
 // دالة لتحضير النص ليتم نطقه
 function setTextMessage(text) {
   message.text = text;
-  message.rate = parseFloat(rateInput.value);
+  message.rate = parseFloat(rateInput.value); // ضبط سرعة النطق
 }
 
 // تشغيل النص
@@ -124,16 +123,25 @@ function speakText() {
 // نطق النص عند الضغط على الصورة
 function handleSpeech(text, box) {
   setTextMessage(text);
+  const selectedVoice = voices.find(voice => voice.name === voicesSelect.value);
+  if (selectedVoice) {
+    message.voice = selectedVoice;
+  }
   speakText();
   box.classList.add("active");
   setTimeout(() => box.classList.remove("active"), 800);
-
-  const selectedVoice = voicesSelect.value;
-  message.voice = voices.find(voice => voice.name === selectedVoice);
 }
 
 // تعيين الصوت عند تغييره من القائمة المنسدلة
-voicesSelect.addEventListener("change", function() {
+voicesSelect.addEventListener("change", () => {
   const selectedVoice = voicesSelect.value;
   message.voice = voices.find(voice => voice.name === selectedVoice);
 });
+
+// إضافة التحكم في سرعة النطق
+rateInput.addEventListener("input", () => {
+  message.rate = parseFloat(rateInput.value);
+});
+
+// استدعاء تحميل الأصوات عند بداية تشغيل الصفحة
+loadVoices();
