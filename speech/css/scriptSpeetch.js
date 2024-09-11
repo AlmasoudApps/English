@@ -1,147 +1,160 @@
 const main = document.querySelector("main");
 const voicesSelect = document.getElementById("voices");
-const rateInput = document.getElementById("rate");
+const textarea = document.getElementById("text");
+const readButton = document.getElementById("read");
+const toggleButton = document.getElementById("toggle");
+const closeButton = document.getElementById("close");
 
 const data = [
-  { image: "cape", text: "cape", missing: ["a", "e"] },
-  { image: "pin", text: "pin", missing: ["i"] },
-  { image: "tap", text: "tap", missing: ["a"] },
-  { image: "pine", text: "pine", missing: ["i", "e"] },
-  { image: "ink", text: "ink", missing: ["i"] },
-  { image: "vase", text: "vase", missing: ["a", "e"] },
+  {
+    image: "cape",
+    text: "cape",
+    type: "Long"
+  },
+  {
+    image: "pin",
+    text: "pin",
+    type: "Short"
+  },
+  {
+    image: "tap",
+    text: "tap",
+    type: "Short"
+  },
+  {
+    image: "pine",
+    text: "pine",
+    type: "Long"
+  },
+  {
+    image: "ink",
+    text: "ink",
+    type: "Short"
+  },
+  {
+    image: "vase",
+    text: "vase",
+    type: "Long"
+  }
 ];
-
-// إنشاء العناصر المرئية بناءً على البيانات
-data.forEach(createBox);
 
 function createBox(item) {
   const box = document.createElement("div");
-  const { image, text, missing } = item;
-
+  const { image, text, type } = item;
   box.classList.add("box");
   box.innerHTML = `
     <br>
-    <img src='./imgSpeech/${image}.jpg' alt="${text.toLowerCase()}" />
-    <p class="info">${text.toLowerCase()}</p>
-    <form class="fill-word" onsubmit="return false;">
-      ${createInputs(text.toLowerCase(), missing)}
-      <br>
-      <p class="result" style="color:green;"></p>
-      <br><br>
-      <button class="check-btn">Check</button>
-    </form>
-    <br>
+    <img src='./imgSpeech/${image}.jpg?raw=true' alt="${text}" />
+    <p class="info">${text} </p> <br>
+    <p class="instruction">انظر واستمع هل الصوت Short أم Long؟</p>
+    <div class="button-group">
+      <button class="check-btn" onclick="checkAnswer('${type}', 'Long')">Long</button>
+      <button class="check-btn" onclick="checkAnswer('${type}', 'Short')">Short</button>
+    </div>
   `;
-
-  // إضافة حدث النقر على الصورة لتشغيل الصوت
-  box.querySelector("img").addEventListener("click", () => handleSpeech(text.toLowerCase(), box));
-  box.querySelector(".check-btn").addEventListener("click", () => checkAnswer(box, text.toLowerCase()));
+  box.addEventListener("click", () => handleSpeech(text, box));
   main.appendChild(box);
 }
 
-function createInputs(word, missing) {
-  return word.split("").map((char) => {
-    return missing.includes(char)
-      ? `<input type="text" maxlength="1" class="letter" style="width: 20px;">`
-      : `<span>${char}</span>`;
-  }).join("");
-}
 
-function checkAnswer(box, correctWord) {
-  const inputs = box.querySelectorAll(".letter");
-  let userAnswer = "";
 
-  inputs.forEach(input => {
-    const letter = input.value.trim().toLowerCase();
-    userAnswer += letter;
-  });
+data.forEach(createBox);
 
-  const missingLetters = correctWord.split('').filter(char => data.find(item => item.text === correctWord).missing.includes(char.toLowerCase()));
-
-  if (userAnswer.length !== missingLetters.length) {
+// التحقق من الإجابة
+// التحقق من الإجابة
+function checkAnswer(correctType, selectedType) {
+  if (correctType === selectedType) {
     Swal.fire({
-      title: 'اكمل الإجابة!',
-      text: 'يجب عليك إكمال جميع الحروف الناقصة.',
-      icon: 'warning',
-      confirmButtonText: 'حسناً'
-    });
-    return;
-  }
-
-  if (userAnswer === missingLetters.join('')) {
-    Swal.fire({
-      title: 'آحسنت!',
-      text: 'إجابتك صحيحة!',
       icon: 'success',
-      confirmButtonText: 'رائع!'
+      title: 'إجابة صحيحة!',
+      text: 'أحسنت، الإجابة صحيحة!',
+      showConfirmButton: false,
+      timer: 1500
     });
+    handleSpeech(selectedType);  // نطق "Long" أو "Short"
   } else {
     Swal.fire({
-      title: 'حاول مرة أخرى!',
-      text: 'إجابتك خاطئة، جرب مرة أخرى.',
       icon: 'error',
-      confirmButtonText: 'حسناً'
+      title: 'إجابة خاطئة!',
+      text: 'حاول مرة أخرى!',
+      showConfirmButton: false,
+      timer: 1500
     });
   }
 }
 
-// إدارة الأصوات وتحميلها
-const message = new SpeechSynthesisUtterance();
-let voices = [];
 
-// تحميل الأصوات المتاحة في المتصفح
+// Check for browser support
+if (!"speechSynthesis" in window) {
+  $("#msg").html(
+    "Sorry your browser <strong>does not support</strong> speech synthesis."
+  );
+}
+
+// Fetch the list of voices and populate the voice options.
 function loadVoices() {
-  voices = speechSynthesis.getVoices();
-  voicesSelect.innerHTML = ""; // تفريغ القائمة لتحديثها
+  // Fetch the available voices in English US.
+  var voices = speechSynthesis
+    .getVoices()
+    .filter(voice => voice.lang == "en-US");
 
-  voices.forEach(voice => {
-    const option = document.createElement("option");
-    option.value = voice.name;
-    option.textContent = voice.name;
-    if (voice.name === "Samantha") {
-      option.selected = true;
-      message.voice = voice; // تعيين الصوت الافتراضي إلى Samantha
-    }
-    voicesSelect.appendChild(option);
+  $("#voices").empty();
+  voices.forEach(function(voice, i) {
+    $option = $("<option>")
+      .val(voice.name)
+      .text(voice.name)
+      .prop("selected", voice.name === "Samantha");
+    $("#voices").append($option);
   });
 }
 
-// استدعاء الأصوات المتاحة عند تغيرها
-window.speechSynthesis.onvoiceschanged = loadVoices;
+// Execute loadVoices.
+loadVoices();
 
-// دالة لتحضير النص ليتم نطقه
-function setTextMessage(text) {
-  message.text = text;
-  message.rate = parseFloat(rateInput.value); // ضبط سرعة النطق
+// Chrome loads voices asynchronously.
+window.speechSynthesis.onvoiceschanged = function(e) {
+  loadVoices();
+};
+
+const message = new SpeechSynthesisUtterance();
+
+function handleSpeech(text, box) {
+  setTextMessage(text);
+  speakText();
+  box.classList.add("active");
+  setTimeout(() => box.classList.remove("active"), 800);
+
+  if ($("#voices").val()) 
+  message.voice = speechSynthesis
+      .getVoices()
+      .filter(voice => voice.name == $("#voices").val())[0];
 }
 
-// تشغيل النص
+function setTextMessage(text) {
+  message.text = text;
+  message.rate = parseFloat($("#rate").val());
+}
+
 function speakText() {
   speechSynthesis.speak(message);
 }
 
-// نطق النص عند الضغط على الصورة
-function handleSpeech(text, box) {
-  setTextMessage(text);
-  const selectedVoice = voices.find(voice => voice.name === voicesSelect.value);
-  if (selectedVoice) {
-    message.voice = selectedVoice;
-  }
-  speakText();
-  box.classList.add("active");
-  setTimeout(() => box.classList.remove("active"), 800);
+function setVoice(e) {
+  message.voice = voices.find((voice) => voice.name === e.target.value);
 }
 
-// تعيين الصوت عند تغييره من القائمة المنسدلة
-voicesSelect.addEventListener("change", () => {
-  const selectedVoice = voicesSelect.value;
-  message.voice = voices.find(voice => voice.name === selectedVoice);
+// Event Listeners
+toggleButton.addEventListener("click", () => {
+  document.getElementById("text-box").classList.toggle("show");
+});
+closeButton.addEventListener("click", () => {
+  document.getElementById("text-box").classList.remove("show");
+});
+speechSynthesis.addEventListener("voiceschanged", loadVoices);
+voicesSelect.addEventListener("change", setVoice);
+readButton.addEventListener("click", () => {
+  setTextMessage(textarea.value);
+  speakText();
 });
 
-// إضافة التحكم في سرعة النطق
-rateInput.addEventListener("input", () => {
-  message.rate = parseFloat(rateInput.value);
-});
-
-// استدعاء تحميل الأصوات عند بداية تشغيل الصفحة
 loadVoices();
