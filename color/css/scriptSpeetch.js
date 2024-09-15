@@ -38,7 +38,7 @@ const data = [
   },
   {
     text: "Blue",
-    answer1: "أصفر",
+    answer1: "وردي",
     answer2: "أصفر",
     answer3: "أزرق"
   },
