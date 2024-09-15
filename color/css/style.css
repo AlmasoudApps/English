@@ -1,0 +1,77 @@
+:root {
+  --main-color: #f8ba96;
+  --secondary-color: #272156;
+  --light-color: #ffffff; /* لون الخلفية الأساسي */
+  --background-color: #fad5bf; /* لون خلفية الصفحة */
+  --border-color: #E2DDEA;
+  --overlay-color: rgba(0,0,0,0.2);
+  --border-radius: 1.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--background-color); /* لون الخلفية الجديد */
+  font-family: "Open Sans Condensed", sans-serif;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.btn {
+  background-color: var(--main-color);
+  color: var(--light-color);
+  border: 0;
+  border-radius: var(--border-radius);
+  font-size: 1.5rem; /* تكبير حجم النص */
+  font-family: inherit;
+  font-weight: bold;
+  padding: 1rem 2rem; /* تعديل حجم الحواف */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px var(--overlay-color);
+  transition: all 0.3s ease;
+  margin-bottom: 20px; /* مسافة بين الأزرار */
+  width: 80%; /* جعل الأزرار أعرض */
+  max-width: 400px; /* تحديد حد أقصى لعرض الأزرار */
+}
+
+.btn img {
+  width: 40px; /* تعديل حجم الصورة */
+  height: 40px;
+  margin-right: 15px; /* إضافة مسافة بين الصورة والنص */
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+
+
+

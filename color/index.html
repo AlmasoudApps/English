@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ِEnglish Phonics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/styleSpeech.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <style>
+    /* وضع أيقونة الصفحة الرئيسية في الجهة اليسرى العلوية مع إطار دائري */
+    .home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      color: #fdfdfd;
+      text-decoration: none;
+      transition: transform 0.3s;
+      border: 2px solid white; /* إضافة إطار أبيض */
+      border-radius: 50%; /* جعل الإطار دائري */
+      padding: 10px; /* إضافة مساحة داخلية لتوسيع الإطار حول الأيقونة */
+      background-color: rgba(255, 255, 255, 0.2); /* إضافة خلفية خفيفة */
+    }
+
+    .home:hover {
+      transform: scale(1.2);
+    }
+
+    /* تصميم الأزرار */
+    .btn-custom {
+      display: block;
+      width: 80%;
+      margin: 20px auto;
+      padding: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-custom img {
+      width: 80px;
+      height: 80px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* زر تعلم الألوان */
+    .btn-learn {
+      background-color: #4caf50;
+    }
+
+    /* زر اختبر الألوان */
+    .btn-test {
+      background-color: #2196f3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- أيقونة الصفحة الرئيسية مع إطار دائري -->
+  <a class='nav-link home' href='index.html'>
+    <i class='fa fa-home fa-lg' aria-hidden='false'></i>
+    <span class='sr-only'>(current)</span>
+  </a>
+
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name="viewport" content="height=device-height, 
+                      width=device-width, initial-scale=1.0, 
+                      minimum-scale=1.0, maximum-scale=1.0, 
+                      user-scalable=no, target-densitydpi=device-dpi">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- شعار الموقع -->
+  <img src="./imgSpeech/logo1.png" class="img-fluid" alt="">
+
+  <br><br>
+  <!-- إضافة الزرين المطلوبين -->
+  <a href="speechcolor.html" class="btn-custom btn-learn">
+    <img src="./imgSpeech/read.png" alt="تعلم الألوان"> تعلم الألوان
+  </a>
+  <a href="speech.html" class="btn-custom btn-test">
+    <img src="./imgSpeech/quiz.png" alt="اختبر الألوان"> اختبر الألوان
+  </a>
+
+  <!-- Footer with credits -->
+  <footer style="text-align: center; margin-top: 20px;">
+    <p>&copy; 2024 Create By Tala ALmasoud</p>
+  </footer>
+
+  <!-- External JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.all.min.js"></script>
+  <script src="./css/style.css"></script>
+
+</body>
+</html>
