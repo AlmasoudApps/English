@@ -8,21 +8,21 @@ const closeButton = document.getElementById("close");
 const data = [
   {
     text: "Red",
-    answer1: "أحمر",
+    answer1: "أصفر",
     answer2: "أخضر",
-    answer3: "أصفر"
+    answer3: "أحمر"
   },
   {
     text: "Orange",
-    answer1: "برتقالي",
-    answer2: "أزرق",
+    answer1: "أزرق",
+    answer2: "برتقالي",
     answer3: "أخضر"
   },
   {
     text: "Yellow",
-    answer1: "أصفر",
+    answer1: "أزرق",
     answer2: "أحمر",
-    answer3: "أزرق"
+    answer3: "أصفر"
   },
   {
     text: "Pink",
@@ -38,9 +38,9 @@ const data = [
   },
   {
     text: "Blue",
-    answer1: "أزرق",
+    answer1: "أصفر",
     answer2: "أصفر",
-    answer3: "أخضر"
+    answer3: "أزرق"
   },
   {
     text: "Purple",
@@ -50,9 +50,9 @@ const data = [
   },
   {
     text: "White",
-    answer1: "أبيض",
+    answer1: "أخضر",
     answer2: "أسود",
-    answer3: "أخضر"
+    answer3: "أبيض"
   },
   {
     text: "Black",
@@ -62,8 +62,8 @@ const data = [
   },
   {
     text: "Brown",
-    answer1: "بني",
-    answer2: "أزرق",
+    answer1: "أزرق",
+    answer2: "بني",
     answer3: "أحمر"
   }
 ];
