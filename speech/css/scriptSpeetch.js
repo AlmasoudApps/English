@@ -12,9 +12,19 @@ const data = [
     type: "Long"
   },
   {
+    image: "cap", 
+    text: "cap",
+    type: "Short"
+  },
+  {
     image: "pin",
     text: "pin",
     type: "Short"
+  },
+  {
+    image: "pine",
+    text: "pine",
+    type: "Long"
   },
   {
     image: "tap",
@@ -22,8 +32,18 @@ const data = [
     type: "Short"
   },
   {
-    image: "pine",
-    text: "pine",
+    image: "tape", 
+    text: "tape",
+    type: "Long"
+  },
+  {
+    image: "tim", 
+    text: "tim",
+    type: "Short"
+  },
+  {
+    image: "time", 
+    text: "time",
     type: "Long"
   },
   {
@@ -35,7 +55,7 @@ const data = [
     image: "vase",
     text: "vase",
     type: "Long"
-  }
+  },
 ];
 
 function createBox(item) {
