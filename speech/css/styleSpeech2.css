@@ -1,0 +1,162 @@
+:root {
+  --main-color: #f8ba96;
+  --secondary-color: #272156;
+  --light-color: #ffffff; /* لون الخلفية الأساسي */
+  --background-color: #fad5bf; /* لون خلفية الصفحة */
+  --border-color: #E2DDEA;
+  --overlay-color: rgba(0,0,0,0.2);
+  --border-radius: 1.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--background-color); /* لون الخلفية الجديد */
+  font-family: "Open Sans Condensed", sans-serif;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.instruction {
+  font-size: 1rem;
+  color: #0c1d9e;
+  text-align: center;
+  direction: rtl;
+  margin-bottom: 10px;
+  font-weight: bold; /* لجعل الخط عريض */
+}
+
+
+.container {
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.btn {
+  background-color: var(--main-color);
+  color: var(--light-color);
+  border: 0;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus, select:focus {
+  outline: none;
+}
+
+.btn-toggle {
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.text-box {
+  background-color: var(--secondary-color);
+  color: var(--light-color);
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  font-size: 0.75rem;
+}
+
+.text-box select {
+  background-color: var(--main-color);
+  color: var(--light-color);
+  border-radius: var(--border-radius);
+  border: 0;
+  font-size: 0.75rem;
+  padding: 0.75rem 1rem;
+  width: 50%;
+  text-align: center; /* جعل النصوص داخل text-box في المنتصف */
+}
+
+.text-box input[type="range"] {
+  width: 100%;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 440px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.box {
+  margin-top: 20px;
+  box-shadow: 0 2px 10px var(--overlay-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 1.99s ease-out;
+}
+
+.box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.box .info {
+  background-color: var(--main-color);
+  color: var(--light-color);
+  font-size: 2.125rem;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  background-color: #617892;
+  font-weight: bold;
+
+
+}
+
+.check-btn {
+  background-color: #0d5cb6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.check-btn:hover {
+  background-color: #0c67cf;
+}
+
+
+.button-group {
+  display: flex; /* استخدام Flexbox لوضع الأزرار بجانب بعض */
+  justify-content: center; /* لضمان وضع الأزرار في وسط الحاوية */
+  gap: 10px; /* مسافة بين الأزرار */
+}
