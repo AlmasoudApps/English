@@ -7,13 +7,13 @@ const closeButton = document.getElementById("close");
 
 const data = [
   {
-    text: "Whose hat is this?",
+    text: "Whose hat is it?",
     answer: "It's not mine",
     image: "hat2", // الكلمة المستخدمة للبحث عن الصورة
   },
 
   {
-    text: "Whose hat is this?",
+    text: "Whose hat is it?",
     answer: "It's mine",
     image: "hat", // الكلمة المستخدمة للبحث عن الصورة
   }
