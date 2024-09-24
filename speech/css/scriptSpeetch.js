@@ -7,80 +7,150 @@ const closeButton = document.getElementById("close");
 
 const data = [
   {
+    image: "parrot",
+    text: "parrot",
+    type: "Long",
+    test: "0"
+  },
+  {
+    image: "pen",
+    text: "pen",
+    type: "Long",
+    test: "0"
+  },
+  {
+    image: "panda",
+    text: "panda",
+    type: "Long",
+    test: "0"
+  },
+  {
+    image: "banana",
+    text: "banana",
+    type: "Long",
+    test: "0"
+  },
+  {
+    image: "bear",
+    text: "bear",
+    type: "Long",
+    test: "0"
+  },
+  {
+    image: "bed",
+    text: "bed",
+    type: "Long",
+    test: "0"
+  },
+  {
     image: "cape",
     text: "cape",
-    type: "Long"
+    type: "Long",
+    test: "1"
   },
   {
     image: "cap", 
     text: "cap",
-    type: "Short"
+    type: "Short",
+    test: "1"
   },
   {
     image: "pin",
     text: "pin",
-    type: "Short"
+    type: "Short",
+    test: "1"
   },
   {
     image: "pine",
     text: "pine",
-    type: "Long"
+    type: "Long",
+    test: "1"
   },
   {
     image: "tap",
     text: "tap",
-    type: "Short"
+    type: "Short",
+    test: "1"
   },
   {
     image: "tape", 
     text: "tape",
-    type: "Long"
+    type: "Long",
+    test: "1"
   },
   {
     image: "tim", 
     text: "tim",
-    type: "Short"
+    type: "Short",
+    test: "1"
   },
   {
     image: "time", 
     text: "time",
-    type: "Long"
+    type: "Long",
+    test: "1"
   },
   {
     image: "ink",
     text: "ink",
-    type: "Short"
+    type: "Short",
+    test: "1"
   },
   {
     image: "vase",
     text: "vase",
-    type: "Long"
+    type: "Long",
+    test: "1"
   },
 ];
 
 function createBox(item) {
   const box = document.createElement("div");
-  const { image, text, type } = item;
+  const { image, text, type, test } = item;
   box.classList.add("box");
+
+  // المحتوى الرئيسي للصورة والنص
   box.innerHTML = `
     <br>
     <img src='./imgSpeech/${image}.jpg?raw=true' alt="${text}" />
-    <p class="info">${text} </p> <br>
-    <p class="instruction">انظر واستمع هل الصوت Short أم Long؟</p>
-    <div class="button-group">
-      <button class="check-btn" onclick="checkAnswer('${type}', 'Long')">Long</button>
-      <button class="check-btn" onclick="checkAnswer('${type}', 'Short')">Short</button>
-    </div>
+    <p class="info">${text}</p>
   `;
+
+  // إذا كانت قيمة `test` تساوي "1"، عرض النص والأزرار
+  if (test === "1") {
+    // عرض النص الإرشادي
+    const instruction = document.createElement("p");
+    instruction.classList.add("instruction");
+    instruction.innerText = "انظر واستمع هل الصوت Short أم Long؟";
+    box.appendChild(instruction);
+
+    // إنشاء مجموعة الأزرار
+    const buttonGroup = document.createElement("div");
+    buttonGroup.classList.add("button-group");
+
+    const longButton = document.createElement("button");
+    longButton.classList.add("check-btn");
+    longButton.innerText = "Long";
+    longButton.onclick = () => checkAnswer(type, 'Long');
+
+    const shortButton = document.createElement("button");
+    shortButton.classList.add("check-btn");
+    shortButton.innerText = "Short";
+    shortButton.onclick = () => checkAnswer(type, 'Short');
+
+    buttonGroup.appendChild(longButton);
+    buttonGroup.appendChild(shortButton);
+
+    box.appendChild(buttonGroup);
+  }
+
   box.addEventListener("click", () => handleSpeech(text, box));
   main.appendChild(box);
 }
 
-
-
 data.forEach(createBox);
 
-// التحقق من الإجابة
+
 // التحقق من الإجابة
 function checkAnswer(correctType, selectedType) {
   if (correctType === selectedType) {
@@ -102,6 +172,8 @@ function checkAnswer(correctType, selectedType) {
     });
   }
 }
+
+
 
 
 // Check for browser support
