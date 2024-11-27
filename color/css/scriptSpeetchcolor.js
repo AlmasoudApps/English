@@ -7,6 +7,30 @@ const closeButton = document.getElementById("close");
 
 const data = [
   {
+    image: "square",
+    text: "square",
+  },
+  {
+    image: "circle",
+    text: "circle",
+  },
+  {
+    image: "triangle",
+    text: "triangle",
+  },
+  {
+    image: "rectangle",
+    text: "rectangle",
+  },
+  {
+    image: "diamond",
+    text: "diamond",
+  },
+  {
+    image: "star",
+    text: "star",
+  },
+  {
     image: "Red",
     text: "Red",
   },
