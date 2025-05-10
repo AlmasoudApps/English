@@ -7,15 +7,15 @@ const closeButton = document.getElementById("close");
 
 const data = [
   {
-    text: "Whose hat is it?",
-    answer: "It's not mine",
-    image: "hat2", // الكلمة المستخدمة للبحث عن الصورة
+    text: "What time do you get up?",
+    answer: "I get up at six o'clock.",
+    image: "get", // الكلمة المستخدمة للبحث عن الصورة
   },
 
   {
-    text: "Whose hat is it?",
-    answer: "It's mine",
-    image: "hat", // الكلمة المستخدمة للبحث عن الصورة
+    text: "What time do you eat lunch?",
+    answer: "I eat lunch at two o'clock.",
+    image: "eat", // الكلمة المستخدمة للبحث عن الصورة
   }
 ];
 
